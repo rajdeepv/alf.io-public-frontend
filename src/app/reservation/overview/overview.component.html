@@ -76,23 +76,11 @@
       <app-recaptcha [apiKey]="event.captchaConfiguration.recaptchaApiKey" (recaptchaResponse)="handleRecaptchaResponse($event)"></app-recaptcha>
     </div>
 
-    <div class="custom-control custom-checkbox" *ngIf="event.privacyPolicyUrl" [class.invisible]="submitting">
-        <input class="custom-control-input" id="privacyPolicyAccepted" formControlName="privacyPolicyAccepted" type="checkbox" aria-labelledby="privacy-policy-label">{{' '}} <!-- ugly, see  https://github.com/angular/angular/issues/21049 -->
-        <label for="privacyPolicyAccepted" class="custom-control-label" id="privacy-policy-label">
-          <span translate="reservation-page.privacy.prefix"></span>{{' '}}<a [attr.href]="event.privacyPolicyUrl" target="_blank" rel="noopener" translate="reservation-page.privacy.link.text"></a>{{' '}}<span translate="reservation-page.privacy.suffix"></span>
-        </label>
-    </div>
-    <div class="custom-control custom-checkbox" [class.invisible]="submitting">
-        <input class="custom-control-input" id="termsAndConditionsAccepted" formControlName="termAndConditionsAccepted" type="checkbox" aria-labelledby="terms-conditions-label">
-        <label class="custom-control-label" for="termsAndConditionsAccepted" id="terms-conditions-label">
-          {{' '}}<span translate="reservation-page.tc.prefix"></span>{{' '}}<a [attr.href]="event.termsAndConditionsUrl" target="_blank" rel="noopener" translate="reservation-page.tc.link.text"></a>{{' '}}<span translate="reservation-page.tc.suffix"></span>
-        </label>
-    </div>
 
     <div class="row d-flex justify-content-between mobile-add-margin-bottom mt-4" *ngIf="!submitting">
       <div class="col-md-5 order-md-1 col-12">
         <button *ngIf="reservationInfo.orderSummary.free" type="submit" class="block-button btn btn-success" translate="reservation-page.continue" [disabled]="expired"></button>
-        <button *ngIf="!reservationInfo.orderSummary.free" type="submit" class="block-button btn btn-success" [disabled]="expired || !selectedPaymentProvider || !acceptedPrivacyAndTermAndConditions">
+        <button *ngIf="!reservationInfo.orderSummary.free" type="submit" class="block-button btn btn-success" [disabled]="expired || !selectedPaymentProvider">
           <ng-container *ngIf="!reservationInfo.tokenAcquired">
             {{ (paymentMethodDeferred ? 'common.confirm' : 'reservation-page.pay')| translate}} <app-price-tag *ngIf="!paymentMethodDeferred" [event]="event" [formattedPrice]="reservationInfo.orderSummary.totalPrice" [displayTextInline]="true"></app-price-tag>
           </ng-container>
